@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { fetchHotelsCom, isArrayNull } from 'lib'
+import { fetchHotelsCom, isArrayNull, handleNullObj } from 'lib'
 import hotelsData from '../hotelsData'
 import { HotelItem } from 'components'
 
@@ -13,10 +13,13 @@ const Hotels = () => {
     console.log(destinationId, checkIn, checkOut, adultsNumber)
 
     const [hotels, setHotels] = useState([])
+    const [mapObj, setMapObj] = useState(null)
 
     useEffect( async () => {
         const hotelsList = await getHotels()
         setHotels(hotelsList)
+        const m = L.map('map')
+        setMapObj(m)
     }, [])
 
     const getHotels = async () => {
@@ -29,9 +32,32 @@ const Hotels = () => {
         return results
     }
 
+    
+    const displayLocation = (lat, lon, msg) => {
+        console.log('inside:', mapObj)
+
+        if(mapObj){
+            const map = mapObj.setView([lat, lon], 13)
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map)
+
+            L.marker([lat, lon]).addTo(map)
+                .bindPopup(msg)
+                .openPopup()
+        }
+    }
+
     return (
         <div className='Hotels-container'>
+            <div id="map"></div>
             {!isArrayNull(hotels) && hotels.map( hotel => {
+                const { name, address, coordinate } = handleNullObj(hotel)
+                const { streetAddress, locality, countryName } = handleNullObj(address)
+                const { lat, lon } = handleNullObj(coordinate)
+                const msg = `${name}<br/>${streetAddress}, ${locality}, ${countryName}`
+                displayLocation(lat, lon, msg)
                 return (
                     <HotelItem hotel={hotel} key={hotel.id}/>
                 )
