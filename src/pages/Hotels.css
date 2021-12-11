@@ -1,5 +1,19 @@
 .Hotels-container{
-    width: 45%;
+    width: 60%;
     margin: 0 auto;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+.Hotels-filtered{
+    width: 300px;
+    margin-right: 20px;
+    /* border: 1px solid red; */
+}
+.Hotels-searched{
+    flex: 1;
+    /* border: 1px solid blue; */
 }
 #map { height: 400px; }
