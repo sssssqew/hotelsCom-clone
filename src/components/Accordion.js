@@ -5,7 +5,7 @@ import { AccordionItem } from 'components'
 
 import './Accordion.css'
 
-const Accordion = ({ title, items, displayFilter }) => {
+const Accordion = ({ title, items, displayFilter, searchHotelsWithFilter, querystring }) => {
     return (
         <div className='Accordion-container'>
             <div className='Accordion-menu' onClick={displayFilter}>
@@ -15,7 +15,7 @@ const Accordion = ({ title, items, displayFilter }) => {
             <div className='Accordion-items'>
                 {!isArrayNull(items) && items.map( item => {
                     return (
-                        <AccordionItem key={item.value}>{item.label}</AccordionItem>
+                        <AccordionItem key={item.value} value={item.value} searchHotelsWithFilter={searchHotelsWithFilter} querystring={querystring}>{item.label}</AccordionItem>
                     )
                 })}
             </div>
