@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 
 import { fetchHotelsCom, isArrayNull, handleNullObj } from 'lib'
 import hotelsData from '../hotelsData'
-import { HotelItem, Accordion, Button } from 'components'
+import { HotelItem, Accordion, Button, StarRatingFilter } from 'components'
 
 import './Hotels.css'
 
@@ -22,6 +22,7 @@ const Hotels = () => {
 
     useEffect( async () => {
         console.log(BASE_URL)
+        // 새로고침해도 필터값이 적용되려면 초기 렌더링시에는 BASE_URL 을 적용하고 queryURL 상태가 null 이 아니면 queryURL 을 적용하면 되지 않을까?
         const { results, filters } = await getHotels(BASE_URL)
         setHotels(results)
         setFilters(filters)
@@ -97,9 +98,10 @@ const Hotels = () => {
         console.log('seach ')
     }
 
-    const AccordionList = () => {
+    const FilterList = () => {
         if(filters){
-            const { neighbourhood, landmarks, accommodationType, facilities, themesAndTypes, accessibility } = handleNullObj(filters)
+            const { neighbourhood, landmarks, accommodationType, facilities, themesAndTypes, accessibility, starRating } = handleNullObj(filters)
+            const starRatingTypes = {items: handleNullObj(starRating).items, title: '숙박 시설 등급', querystring: 'star_rating_ids'}
             const filterTypes = [
                 {items: handleNullObj(neighbourhood).items, title: '위치 및 주변 지역', querystring: 'landmark_id'},
                 {items: handleNullObj(landmarks).items, title: '랜드마크', querystring: 'landmark_id'},
@@ -110,11 +112,14 @@ const Hotels = () => {
             ]
 
             return (
-                <div>{filterTypes.map( (filterType, id) => {
-                    return (
-                        <Accordion key={id} title={filterType.title} items={filterType.items} displayFilter={displayFilter} searchHotelsWithFilter={searchHotelsWithFilter} querystring={filterType.querystring}/>
-                    )
+                <>
+                    <StarRatingFilter title={starRatingTypes.title} items={starRatingTypes.items} searchHotelsWithFilter={searchHotelsWithFilter} querystring={starRatingTypes.querystring}/>
+                    <div>{filterTypes.map( (filterType, id) => {
+                        return (
+                            <Accordion key={id} title={filterType.title} items={filterType.items} displayFilter={displayFilter} searchHotelsWithFilter={searchHotelsWithFilter} querystring={filterType.querystring}/>
+                        )
                 })}</div>
+                </>
             )
         }else{
             return <></>
@@ -133,7 +138,7 @@ const Hotels = () => {
     return (
         <div className='Hotels-container'>
             <div className='Hotels-filtered'>
-                <AccordionList/>
+                <FilterList/>
                 <Button handleClick={searchHotels}>호텔 검색</Button>
             </div>
             <div className='Hotels-searched'>
