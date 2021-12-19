@@ -12,7 +12,7 @@ const StarRatingFilter = ({ title, items, searchHotelsWithFilter, querystring })
         <div className='StarRatingFilter-container'>
             <div className='StarRatingFilter-title'>{title}</div>
             <div className='StarRatingFilter-btns'>
-                {!isArrayNull(reversedItems) && reversedItems.map( item => {
+                {!isArrayNull(reversedItems) && reversedItems.map( (item, idx) => {
                     return (
                         <div className='StarRatingFilter-rating' key={item.value} onClick={() => searchHotelsWithFilter(querystring, item.value)}>{item.value}</div>
                     )

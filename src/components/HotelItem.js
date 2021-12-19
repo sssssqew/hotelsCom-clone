@@ -13,8 +13,10 @@ const HotelItem = ({ hotel }) => {
     const { old, current, info, summary, totalPricePerStay} = handleNullObj(price)
     const totalPrice = totalPricePerStay? totalPricePerStay.split(/[<>()]/) : []
 
+    const hotelInfo = { id, name, starRating, rating, badgeText, old, current, info, totalPrice, summary }
+
     return (<div className='HotelItem-container'>
-                <Link className='HotelItem-thumbnail' to='/hotelInfo'>
+                <Link className='HotelItem-thumbnail' to='/hotelInfo' state={{ hotelInfo }} >
                     <img className='HotelItem-thumbnail-img' src={srpDesktop} alt={name}/>
                 </Link>
                 <div className='HotelItem-info'>
