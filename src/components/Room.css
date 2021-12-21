@@ -103,3 +103,98 @@
     font-size: 0.7rem;
 }
 
+.Modal-header{
+    padding: 16px 12px;
+    color: #d32f2f;
+    font-weight: bold;
+    font-size: 1.1rem;
+    box-sizing: border-box;
+
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid lightgray;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    background: white;
+    margin-bottom: auto;
+}
+.Modal-close{
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+}
+.Modal-room-type{
+    margin-left: 40px;
+    text-align: left;
+    flex:1;
+}
+.Modal-body{
+    width: 100%;
+    height: 650px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    color: var(--grey-1);
+    font-size: 0.9rem;
+    font-weight: 400;
+    box-sizing: border-box;
+
+    overflow-x: none;
+    overflow-y: auto;
+}
+.Modal-thumbnail-container{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.Modal-thumbnail{
+    width: 500px;
+    height: 280px;
+    overflow: hidden;
+}
+.Modal-thumbnail img{
+    width: 100%;
+    height: 100%;
+}
+.Modal-maxOccupancy{
+    flex: 1;
+    margin-left: 15px;
+    text-align: left;
+}
+.Modal-room-amenity{
+    width: 100%;
+    border-top: 1px solid lightgray;
+    margin-top: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-align: left;
+}
+.Modal-room-facility{
+    width: 100%;
+    border-top: 1px solid lightgray;
+    margin-top: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.Modal-room-details-text{
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+.Modal-room-details{
+    columns: 2 auto;
+    text-align: left;
+    color: #333333;
+    line-height: 25px;
+}
+

@@ -15,8 +15,8 @@ const HotelInfo = () => {
     const { hotelInfo, bookingInfo } = handleNullObj(location.state)
     const { id, name, starRating, rating, badgeText, old, current, info, totalPrice, summary } = handleNullObj(hotelInfo)
     const { checkIn, checkOut, adultsNumber } = handleNullObj(bookingInfo)
-    console.log(id, name, starRating, rating, badgeText, old, current, info, totalPrice, summary)
-    console.log(checkIn, checkOut, adultsNumber)
+    // console.log(id, name, starRating, rating, badgeText, old, current, info, totalPrice, summary)
+    // console.log(checkIn, checkOut, adultsNumber)
 
     const [photos, setPhotos] = useState([])
     const [index, setIndex] = useState(0)
@@ -30,7 +30,6 @@ const HotelInfo = () => {
         setPhotos(photos)
         setReviews(reviews)
         setDetails(details)
-        console.log(details)
     }, [])
 
     const getHotelPhotos = async (url) => {
