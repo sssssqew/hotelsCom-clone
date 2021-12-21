@@ -2,7 +2,7 @@ import React from 'react'
 import './Review.css'
 
 const Review = ({ review }) => {
-    console.log(review)
+    // console.log(review)
     const { formattedRating, qualitativeBadgeText, title, summary, recommendedBy } = review
     return (
         <div className='Review-container'>

@@ -146,8 +146,10 @@ const Hotels = () => {
                 {!isArrayNull(hotels) && hotels.map( hotel => {
                     const { lat, lon, msg } = getLocation(hotel)
                     displayLocation(lat, lon, msg)
+                    console.log('booking info: ', checkIn, checkOut, adultsNumber)
+                    const bookingInfo = { checkIn, checkOut, adultsNumber }
                     return (
-                        <HotelItem hotel={hotel} key={hotel.id}/>
+                        <HotelItem hotel={hotel}  bookingInfo={bookingInfo} key={hotel.id}/>
                     )
                 })}
             </div>

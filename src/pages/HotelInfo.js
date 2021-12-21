@@ -1,28 +1,36 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { Review } from 'components'
+import { Review, Room } from 'components'
 import { fetchHotelsCom, isArrayNull, handleNullObj } from 'lib'
+
 import hotelPhotos from '../hotelPhotos'
 import hotelReviews from '../hotelReviews'
+import hotelDetail from '../hotelDetail'
 
 import './HotelInfo.css'
 
 const HotelInfo = () => {
     const location = useLocation()
-    const { hotelInfo } = handleNullObj(location.state)
+    const { hotelInfo, bookingInfo } = handleNullObj(location.state)
     const { id, name, starRating, rating, badgeText, old, current, info, totalPrice, summary } = handleNullObj(hotelInfo)
+    const { checkIn, checkOut, adultsNumber } = handleNullObj(bookingInfo)
     console.log(id, name, starRating, rating, badgeText, old, current, info, totalPrice, summary)
+    console.log(checkIn, checkOut, adultsNumber)
 
     const [photos, setPhotos] = useState([])
     const [index, setIndex] = useState(0)
     const [reviews, setReviews] = useState([])
+    const [details, setDetails] = useState(null)
 
     useEffect( async () => {
         const photos = await getHotelPhotos(`https://hotels-com-provider.p.rapidapi.com/v1/hotels/photos?hotel_id=${id}`)
         const reviews = await getReviews(`https://hotels-com-provider.p.rapidapi.com/v1/hotels/reviews?locale=en_US&hotel_id=${id}`)
+        const details = await getDetailsOfHotel(`https://hotels-com-provider.p.rapidapi.com/v1/hotels/booking-details?adults_number=${adultsNumber}&checkin_date=${checkIn}&locale=ko_KR&currency=KRW&hotel_id=${id}&checkout_date=${checkOut}`)
         setPhotos(photos)
         setReviews(reviews)
+        setDetails(details)
+        console.log(details)
     }, [])
 
     const getHotelPhotos = async (url) => {
@@ -44,6 +52,30 @@ const HotelInfo = () => {
         const { reviews } = !isArrayNull(groupReview) ? handleNullObj(groupReview[0]) : []
 
         return reviews
+    }
+
+    const getDetailsOfHotel = async (url) => {
+        // const data = await fetchHotelsCom(url)
+        // return data 
+
+        return hotelDetail
+    }
+
+    const Rooms = () => {
+        if(details){
+            const { roomsAndRates } = handleNullObj(details)
+            const { rooms } = handleNullObj(roomsAndRates)
+
+            return (
+                <>{!isArrayNull(rooms) && rooms.map( (room, id) => {
+                    return (
+                        <Room key={id} room={room}/>
+                    )
+                })}</>
+            )
+        }else{
+            return <></>
+        }
     }
 
     return (
@@ -76,6 +108,9 @@ const HotelInfo = () => {
                     })}
                 </div>
             </div>
+
+            {/* 호텔룸 정보 보여주기 */}
+            <Rooms/>
 
             {/* 호텔 리뷰 보여주기 */}
             <div className='HotelInfo-reviews'>

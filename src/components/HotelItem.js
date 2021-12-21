@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { isArrayNull, handleNullObj } from 'lib'
 import './HotelItem.css'
 
-const HotelItem = ({ hotel }) => {
+const HotelItem = ({ hotel, bookingInfo }) => {
     const { id, name,  optimizedThumbUrls, starRating, address, landmarks, guestReviews, ratePlan, neighbourhood } = handleNullObj(hotel)
     const { srpDesktop } = handleNullObj(optimizedThumbUrls)
     const { streetAddress, locality, postalCode, countryName} = handleNullObj(address)
@@ -14,9 +14,10 @@ const HotelItem = ({ hotel }) => {
     const totalPrice = totalPricePerStay? totalPricePerStay.split(/[<>()]/) : []
 
     const hotelInfo = { id, name, starRating, rating, badgeText, old, current, info, totalPrice, summary }
+    console.log('hotelItem booking info: ', bookingInfo)
 
     return (<div className='HotelItem-container'>
-                <Link className='HotelItem-thumbnail' to='/hotelInfo' state={{ hotelInfo }} >
+                <Link className='HotelItem-thumbnail' to='/hotelInfo' state={{ hotelInfo, bookingInfo }} >
                     <img className='HotelItem-thumbnail-img' src={srpDesktop} alt={name}/>
                 </Link>
                 <div className='HotelItem-info'>
